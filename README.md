@@ -18,3 +18,4 @@ Each log file contains 24 hours of data and is about 500MB.  Write a script that
 ### TODO:
 - clean up input and output file name concatentations
 - add regex checks and logging for log metadata parsing and extraction
+- refactor `create_output_list` 
