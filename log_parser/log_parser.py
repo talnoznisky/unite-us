@@ -11,15 +11,16 @@ HTTP_STATUS_CODES = [str(code.value) for code in http.HTTPStatus]
 
 def get_paths(dir: str) -> list:
     '''
-    Walk through /log_dir/ for all log files
-    param: log_dir - defaults to 'logs'
+    Walk through /dir/ for all log files
+    param: dir - directory to look for files
     returns: list of concatenated dir + file_name 
     '''
     files = os.path.join(os.path.dirname(__file__),'..', dir)
-    file_names  = next(os.walk(files))[2]    
+    file_names = next(os.walk(files))[2]    
     file_paths = ['/'.join([dir, file_name]) for file_name in file_names]
     
     return file_paths
+
 
 def create_output_file_path(input_file_path: str, 
                             output_dir: str='output',
