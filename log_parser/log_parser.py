@@ -145,8 +145,10 @@ def write_to_csv(output_list: dict, output_path: str) -> None:
 if __name__ == '__main__':
     log_file_paths = get_paths('logs')
     for log_file_path in log_file_paths:
-        output = create_output_list(create_tuple_list(log_file_path))
-
-        output_path = create_output_file_path(log_file_path)    
-        
-        write_to_csv(output, output_path)
+        data = create_tuple_list(log_file_path)
+        if len(data) >= 1:
+            output = create_output_list(data)
+            output_path = create_output_file_path(log_file_path)    
+            write_to_csv(output, output_path)
+        else:
+            logger.warning(f'{log_file_path} is empty! Moving on.')
