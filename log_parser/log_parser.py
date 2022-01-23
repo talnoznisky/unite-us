@@ -5,6 +5,8 @@ import os
 import logging
 
 logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger('log_parser')
+
 HTTP_STATUS_CODES = [str(code.value) for code in http.HTTPStatus]
 
 def get_paths(dir: str) -> list:
@@ -78,12 +80,12 @@ def create_tuple_list(file_name: str) -> list:
     '''
     tuple_list = []
     with open(file_name) as f:
-        logging.info(f'Reading:\t{file_name}')
+        logger.info(f'Reading: {file_name}')
         try:
             for line in f.readlines():
                 bisect.insort_left(tuple_list, (extract_metadata(line)))
         except IOError as e:
-            logging.warning(e)
+            logger.warning(e)
     return tuple_list
 
 
@@ -131,13 +133,14 @@ def write_to_csv(output_list: dict, output_path: str) -> None:
     with open(output_path, 'w') as csvfile:
         writer = csv.DictWriter(csvfile, fieldnames=fields)
         writer.writeheader()
-        logging.info(f'Writing:\t{output_path}')
+        logger.info(f'Writing: {output_path}')
         try:    
             for data in output_list:
                 writer.writerow(data)
-            logging.info(f'Wrote:\t{len(output_list)} rows to {output_path}')
+            logger.info(f'Wrote: {len(output_list)} rows to {output_path}')
         except IOError as e:
-            logging.warning(e)
+            logger.warning(e)
+
 
 if __name__ == '__main__':
     log_file_paths = get_paths('logs')
